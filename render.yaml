@@ -10,3 +10,5 @@ services:
         value: production
       - key: MONGO_URI
         sync: false # Set this manually in Render dashboard
+      - key: NODE_VERSION
+        value: 20.10.0

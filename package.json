@@ -2,8 +2,11 @@
     "name": "mern-app",
     "version": "1.0.0",
     "description": "Basic MERN Stack Application",
+    "engines": {
+        "node": ">=20.0.0"
+    },
     "scripts": {
-        "install-all": "npm install && npm install --prefix server && npm install --prefix client",
+        "install-all": "npm install && npm install --prefix server && npm install --prefix client --production=false",
         "client": "npm run dev --prefix client",
         "server": "npm run dev --prefix server",
         "dev": "concurrently -n \"server,client\" -c \"cyan,magenta\" \"npm run server\" \"npm run client\"",
@@ -11,6 +14,6 @@
         "start": "node server/index.js"
     },
     "devDependencies": {
-        "concurrently": "^9.2.1"
+        "concurrently": "^9.1.2"
     }
 }
