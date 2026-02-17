@@ -1,44 +1,57 @@
-import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useExpenses } from "./hooks/useExpenses";
+import ExpenseForm from "./components/ExpenseForm";
+import ExpenseFilters from "./components/ExpenseFilters";
+import ExpenseList from "./components/ExpenseList";
+import ExpenseTotal from "./components/ExpenseTotal";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [serverStatus, setServerStatus] = useState('Checking...')
-
-  useEffect(() => {
-    fetch('/api/health')
-      .then((res) => res.json())
-      .then((data) => setServerStatus(`Server is ${data.status} ✅`))
-      .catch(() => setServerStatus('Server is offline ❌'))
-  }, [])
+  const {
+    expenses,
+    loading,
+    error,
+    category,
+    setCategory,
+    sort,
+    setSort,
+    total,
+    refetch,
+  } = useExpenses();
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>MERN Stack App</h1>
-      <div className="card">
-        <p>Backend Status: <strong>{serverStatus}</strong></p>
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Built with MongoDB, Express, React & Node.js
-      </p>
-    </>
-  )
+    <div className="app">
+      <header className="app-header">
+        <h1>💰 Expense Tracker</h1>
+        <p>Track your personal expenses and understand where your money goes</p>
+      </header>
+
+      <main className="app-main">
+        <ExpenseForm onExpenseAdded={refetch} />
+
+        <div className="expenses-section">
+          <div className="section-header">
+            <h2>Your Expenses</h2>
+            <ExpenseTotal total={total} />
+          </div>
+
+          <ExpenseFilters
+            category={category}
+            setCategory={setCategory}
+            sort={sort}
+            setSort={setSort}
+          />
+
+          {error && <div className="error-message">{error}</div>}
+
+          <ExpenseList expenses={expenses} loading={loading} />
+        </div>
+      </main>
+
+      <footer className="app-footer">
+        <p>Built with MERN Stack • Production-Ready Architecture</p>
+      </footer>
+    </div>
+  );
 }
 
-export default App
+export default App;
