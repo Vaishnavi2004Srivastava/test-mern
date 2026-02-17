@@ -1,0 +1,16 @@
+{
+    "name": "mern-app",
+    "version": "1.0.0",
+    "description": "Basic MERN Stack Application",
+    "scripts": {
+        "install-all": "npm install && npm install --prefix server && npm install --prefix client",
+        "client": "npm run dev --prefix client",
+        "server": "npm run dev --prefix server",
+        "dev": "concurrently -n \"server,client\" -c \"cyan,magenta\" \"npm run server\" \"npm run client\"",
+        "build": "npm run build --prefix client",
+        "start": "node server/index.js"
+    },
+    "devDependencies": {
+        "concurrently": "^9.2.1"
+    }
+}

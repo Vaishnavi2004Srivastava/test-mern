@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: mern-app
+    runtime: node
+    plan: free
+    buildCommand: npm run install-all && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false # Set this manually in Render dashboard
